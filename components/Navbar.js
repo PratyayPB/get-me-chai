@@ -1,6 +1,6 @@
 "use client";
-import React from "react";
-import { useState } from "react";
+import React, { use } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
@@ -9,6 +9,19 @@ import Tea from "../public/tea.gif";
 const Navbar = () => {
   const { data: session } = useSession();
   const [showdropdown, setShowdropdown] = useState(false);
+  const btnRef = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (btnRef.current && !btnRef.current.contains(event.target)) {
+        setShowdropdown(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   return (
     <nav className="flex bg-gray-900 items-center justify-between px-20 py-4">
@@ -22,12 +35,13 @@ const Navbar = () => {
         {session && (
           <>
             <button
+              ref={btnRef}
               onClick={() => setShowdropdown(!showdropdown)}
-              onBlur={() => {
-                setTimeout(() => {
-                  setShowdropdown(false);
-                }, 100);
-              }}
+              // onBlur={() => {
+              //   setTimeout(() => {
+              //     setShowdropdown(false);
+              //   }, 1000);
+              // }}
               id="dropdownDefaultButton"
               data-dropdown-toggle="dropdown"
               className="text-white mx-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -95,7 +109,7 @@ const Navbar = () => {
           <button
             className="text-white w-fit bg-linear-to-br from-purple-600 to-blue-500 hover:bg-linear-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 "
             onClick={() => {
-              signOut();
+              signOut({ callbackUrl: "/" });
             }}
           >
             Logout
