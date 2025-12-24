@@ -1,23 +1,24 @@
 import mongoose from "mongoose";
 const { Schema, model } = mongoose;
-
-const UserSchema = new Schema({
-  email: {
-    type: String,
-    required: true,
-  },
+const PaymentSchema = new Schema({
   name: {
     type: String,
+    required: true,
   },
-  username: {
+  to_user: {
     type: String,
     required: true,
   },
-  profilepic: {
+  oid: {
+    type: String,
+    required: true,
+  },
+  message: {
     type: String,
   },
-  coverpic: {
-    type: String,
+  amount: {
+    type: Number,
+    required: true,
   },
   createdAt: {
     type: Date,
@@ -27,6 +28,10 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  done: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-export default mongoose.models.User || model("User", UserSchema);
+export default model("Payment", PaymentSchema) || mongoose.models.Payment;
