@@ -3,6 +3,7 @@ import TeaGif from "../public/tea.gif";
 import WorkIcon from "../public/man.gif";
 import Coin from "../public/coin.gif";
 import Group from "../public/group.gif";
+import Link from "next/link";
 export default function Home() {
   return (
     <>
@@ -25,12 +26,16 @@ export default function Home() {
           fans and get your projects funded.
         </p>
         <div className="flex items-center justify-center gap-8">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Get Started
-          </button>{" "}
-          <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-            Learn More
-          </button>
+          <Link href="/login">
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Get Started
+            </button>{" "}
+          </Link>
+          <Link href="/about">
+            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+              Learn More
+            </button>
+          </Link>
         </div>
       </div>
 

@@ -27,6 +27,16 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  razorpayid: {
+    type: String,
+  },
+  razorpaysecret: {
+    type: String,
+  },
+  done: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 export default mongoose.models.User || model("User", UserSchema);
