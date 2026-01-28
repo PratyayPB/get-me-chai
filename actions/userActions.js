@@ -47,6 +47,7 @@ export const fetchPayments = async (username) => {
     .sort({ amount: -1 })
     .limit(10)
     .lean({ flattenObjectIds: true });
+  console.log(p);
   return p;
 };
 
@@ -66,7 +67,7 @@ export const updateProfile = async (data, oldUsername) => {
   if (oldUsername !== ndata.username) {
     await Payment.updateMany(
       { to_user: oldUsername },
-      { to_user: ndata.username }
+      { to_user: ndata.username },
     );
   }
 };

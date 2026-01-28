@@ -72,8 +72,8 @@ const Dashboard = () => {
         theme="light"
       />
 
-      <div className="container mx-auto py-5 px-6 ">
-        <h1 className="text-center my-5 text-3xl font-bold">
+      <div className="container mx-auto py-5 px-4 md:px-6">
+        <h1 className="text-center my-5 text-2xl md:text-3xl font-bold">
           Welcome to your Dashboard
         </h1>
 
@@ -91,7 +91,7 @@ const Dashboard = () => {
               type="text"
               name="name"
               id="name"
-              className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm md:text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
           </div>
           {/* input for email */}
@@ -108,7 +108,7 @@ const Dashboard = () => {
               type="email"
               name="email"
               id="email"
-              className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm md:text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
           </div>
           {/* input forusername */}
@@ -125,7 +125,7 @@ const Dashboard = () => {
               type="text"
               name="username"
               id="username"
-              className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm md:text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
           </div>
           {/* input for profile picture of input type text */}
@@ -142,7 +142,7 @@ const Dashboard = () => {
               type="text"
               name="profilepic"
               id="profilepic"
-              className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm md:text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
           </div>
 
@@ -160,7 +160,7 @@ const Dashboard = () => {
               type="text"
               name="coverpic"
               id="coverpic"
-              className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm md:text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
           </div>
           {/* input razorpay id */}
@@ -177,7 +177,7 @@ const Dashboard = () => {
               type="password"
               name="razorpayid"
               id="razorpayid"
-              className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm md:text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
           </div>
           {/* input razorpay secret */}
@@ -194,7 +194,7 @@ const Dashboard = () => {
               type="password"
               name="razorpaysecret"
               id="razorpaysecret"
-              className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm md:text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
           </div>
 
@@ -202,7 +202,7 @@ const Dashboard = () => {
           <div className="my-6">
             <button
               type="submit"
-              className="block w-full p-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-blue-500 focus:ring-4 focus:outline-none   dark:focus:ring-blue-800 font-medium text-sm"
+              className="block w-full p-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-blue-500 focus:ring-4 focus:outline-none   dark:focus:ring-blue-800 font-medium text-sm md:text-base"
             >
               Save
             </button>

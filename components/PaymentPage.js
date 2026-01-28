@@ -24,10 +24,6 @@ const PaymentPage = ({ username }) => {
   const [pfp, setpfp] = useState(currentUser?.pfp?.Pfp || Pfp);
 
   useEffect(() => {
-    getData();
-  }, []);
-
-  useEffect(() => {
     if (searchParams.get("paymentdone") === "true") {
       toast("Payment Successful!", {
         position: "top-right",
@@ -40,9 +36,9 @@ const PaymentPage = ({ username }) => {
         theme: "light",
         transition: Bounce,
       });
+      router.push(`${username}`);
     }
-    router.push(`${username}`);
-  }, []);
+  }, [searchParams, username, router]);
 
   const handleChange = (e) => {
     setpaymentForm({
@@ -50,12 +46,23 @@ const PaymentPage = ({ username }) => {
       [e.target.name]: e.target.value,
     });
   };
-  const getData = async () => {
-    let u = await fetchUser(username);
-    setcurrentUser(u);
-    let dbpayments = await fetchPayments(username);
-    setPayments(dbpayments);
-  };
+  // const getData = async () => {
+  //   let u = await fetchUser(username);
+  //   setcurrentUser(u);
+  //   let dbpayments = await fetchPayments(username);
+  //   setPayments(dbpayments);
+  // };
+  useEffect(() => {
+    const getData = async () => {
+      const u = await fetchUser(username);
+      setcurrentUser(u);
+
+      const dbpayments = await fetchPayments(username);
+      setPayments(dbpayments);
+    };
+
+    if (username) getData();
+  }, [username]);
 
   const pay = async (amount) => {
     let a = await initiate(amount, username, paymentForm);
