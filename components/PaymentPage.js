@@ -104,39 +104,39 @@ const PaymentPage = ({ username }) => {
       />
       <Script src="https://checkout.razorpay.com/v1/checkout.js"></Script>
 
-      <div className="min-h-screen ">
+      <div className="min-h-screen">
         <div className="cover relative">
           <Image
             src={coverImg}
             alt="Cover Image"
-            className="object-cover h-[50vh]"
+            className="object-cover w-full h-[35vh] md:h-[40vh] lg:h-[50vh]"
             onError={() => setcoverImg(Cover)}
           />
 
-          <div className="absolute left-1/2 top-100 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="  absolute left-1/2  transform -translate-x-1/2 -translate-y-1/2 md:top-100 ">
             <Image
               src={pfp}
               alt="Pfp"
-              className="w-30 h-30 rounded-lg"
+              className="w-30 h-30 rounded-lg "
               onError={() => setpfp(Pfp)}
             />
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-center mt-25 gap-2">
-          <h1 className="text-3xl font-semibold">@{username}</h1>
-          <h3 className=" font-medium text-gray-50">
+        <div className="flex flex-col items-center justify-center mt-20 md:mt-25 gap-2 px-4">
+          <h1 className="text-2xl md:text-3xl font-semibold">@{username}</h1>
+          <h3 className="font-medium text-gray-50 text-center">
             Lets help {currentUser.name || "this creator"} to have a chai!
           </h3>
-          <h3 className="font-medium text-[#BFBFBF]">
+          <h3 className="font-medium text-[#BFBFBF] text-center">
             {payments.length} Payments. ₹
             {payments.reduce((acc, payment) => acc + payment.amount / 100, 0)}{" "}
             raised so far.
           </h3>
         </div>
 
-        <div className="payments  flex items-start justify-center gap-10 my-10 w-[70%] mx-auto">
-          <div className="supporters bg-[#101828]  w-full pl-5 py-8 rounded-2xl h-90  overflow-y-scroll">
+        <div className="payments flex flex-col lg:flex-row items-start justify-center gap-6 lg:gap-10 my-10 w-full max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8">
+          <div className="supporters bg-[#101828] w-full lg:w-1/2 pl-5 py-8 rounded-2xl h-auto max-h-[400px] overflow-y-scroll">
             <h1 className="font-bold pb-4 text-xl">Supporters</h1>
             <ul className="flex flex-col gap-2">
               {payments.length == 0 && <li>No payments yet</li>}
@@ -154,16 +154,16 @@ const PaymentPage = ({ username }) => {
               })}
             </ul>
           </div>
-          <div className="additional  bg-[#101828]  w-full pl-10 py-20 rounded-2xl h-90 flex flex-col items-start justify-center ">
-            <h1 className="font-bold text-xl">Make a Payment</h1>
+          <div className="additional bg-[#101828] w-full lg:w-1/2 px-6 md:px-10 py-10 md:py-20 rounded-2xl h-auto flex flex-col items-start justify-center">
+            <h1 className="font-bold text-xl mb-4">Make a Payment</h1>
 
-            <div className="input-boxes flex flex-col gap-4 my-4 w-[90%]  ">
+            <div className="input-boxes flex flex-col gap-4 my-4 w-full">
               <input
                 name="name"
                 onChange={handleChange}
                 value={paymentForm.name}
                 type="text"
-                className=" bg-[#1D293B] rounded-md py-1.5 pl-4"
+                className="bg-[#1D293B] rounded-md py-3 px-4 min-h-[48px]"
                 placeholder="Enter Name"
               />
               <input
@@ -171,7 +171,7 @@ const PaymentPage = ({ username }) => {
                 onChange={handleChange}
                 value={paymentForm.message}
                 type="text"
-                className="bg-[#1D293B] rounded-md py-1.5 pl-4"
+                className="bg-[#1D293B] rounded-md py-3 px-4 min-h-[48px]"
                 placeholder="Enter Message"
               />
               <input
@@ -179,12 +179,12 @@ const PaymentPage = ({ username }) => {
                 onChange={handleChange}
                 value={paymentForm.amount}
                 type="number"
-                className="bg-[#1D293B] rounded-md py-1.5 pl-4"
+                className="bg-[#1D293B] rounded-md py-3 px-4 min-h-[48px]"
                 placeholder="Enter Amount"
               />
               <button
                 onClick={() => pay(Number.parseInt(paymentForm.amount) * 100)}
-                className="text-white bg-linear-to-br from-purple-600 to-blue-500 hover:bg-linear-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm  py-2.5 text-center disabled:opacity-50 disabled:bg-linear-to-br disabled:from-purple-100 disabled:to-blue-100 disabled:text-black disabled:cursor-not-allowed"
+                className="text-white bg-linear-to-br from-purple-600 to-blue-500 hover:bg-linear-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm py-3 text-center disabled:opacity-50 disabled:bg-linear-to-br disabled:from-purple-100 disabled:to-blue-100 disabled:text-black disabled:cursor-not-allowed min-h-[48px]"
                 disabled={
                   !paymentForm.name ||
                   !paymentForm.amount ||
@@ -195,25 +195,25 @@ const PaymentPage = ({ username }) => {
               </button>
             </div>
 
-            <div className="pay-options flex gap-4 mt-4">
+            <div className="pay-options flex flex-wrap gap-4 mt-4">
               <button
                 onClick={() => pay(1000)}
                 disabled={!paymentForm.name || !paymentForm.message}
-                className="bg-[#1D293B] px-3 py-1.5 rounded-md disabled:opacity-50"
+                className="bg-[#1D293B] px-4 py-3 rounded-md disabled:opacity-50 min-h-[48px]"
               >
                 Pay ₹10
               </button>
               <button
                 disabled={!paymentForm.name || !paymentForm.message}
                 onClick={() => pay(2000)}
-                className="bg-[#1D293B] px-3 py-1.5 rounded-md disabled:opacity-50"
+                className="bg-[#1D293B] px-4 py-3 rounded-md disabled:opacity-50 min-h-[48px]"
               >
                 Pay ₹20
               </button>
               <button
                 disabled={!paymentForm.name || !paymentForm.message}
                 onClick={() => pay(3000)}
-                className="bg-[#1D293B] px-3 py-1.5 rounded-md disabled:opacity-50"
+                className="bg-[#1D293B] px-4 py-3 rounded-md disabled:opacity-50 min-h-[48px]"
               >
                 Pay ₹30
               </button>

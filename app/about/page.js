@@ -2,9 +2,9 @@ import React from "react";
 
 const About = () => {
   return (
-    <div className="min-h-screen container mx-auto px-8 md:px-20 py-10 ">
-      <h1 className="text-3xl font-semibold mb-4">About Get Me a Chai</h1>
-      <p className="text-lg mb-6">
+    <div className="min-h-screen container max-w-screen-xl mx-auto px-4 md:px-8 lg:px-20 py-10">
+      <h1 className="text-2xl md:text-3xl font-semibold mb-4">About Get Me a Chai</h1>
+      <p className="text-base md:text-lg mb-6">
         Get Me a Chai is a crowdfunding platform designed for creators to fund
         their projects with the support of their fans. It&apos;s a space where
         your fans can directly contribute to your creative endeavors by buying
@@ -12,16 +12,16 @@ const About = () => {
         to life.
       </p>
 
-      <h2 className="text-2xl font-semibold mb-4">How It Works</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+      <h2 className="text-xl md:text-2xl font-semibold mb-4">How It Works</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="flex items-center mb-6">
           <img
-            className="w-20 h-20 rounded-full mr-4"
+            className="w-16 h-16 md:w-20 md:h-20 rounded-full mr-4"
             src="/group.gif"
             alt="Fans Want to Collaborate"
           />
           <div>
-            <h3 className="text-xl font-semibold mb-2">
+            <h3 className="text-lg md:text-xl font-semibold mb-2">
               Fans Want to Collaborate
             </h3>
             <p>
@@ -32,12 +32,12 @@ const About = () => {
         </div>
         <div className="flex items-center mb-6">
           <img
-            className="w-20 h-20 rounded-full mr-4"
+            className="w-16 h-16 md:w-20 md:h-20 rounded-full mr-4"
             src="/coin.gif"
             alt="Support Through Chai"
           />
           <div>
-            <h3 className="text-xl font-semibold mb-2">Support Through Chai</h3>
+            <h3 className="text-lg md:text-xl font-semibold mb-2">Support Through Chai</h3>
             <p>
               Receive support from your fans in the form of chai purchases,
               directly contributing to your project funding.

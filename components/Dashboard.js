@@ -72,7 +72,7 @@ const Dashboard = () => {
         theme="light"
       />
 
-      <div className="container mx-auto py-5 px-4 md:px-6">
+      <div className="container max-w-screen-xl mx-auto py-5 px-4 md:px-6">
         <h1 className="text-center my-5 text-2xl md:text-3xl font-bold">
           Welcome to your Dashboard
         </h1>
@@ -91,7 +91,7 @@ const Dashboard = () => {
               type="text"
               name="name"
               id="name"
-              className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm md:text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="block w-full p-3 md:p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm md:text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 min-h-[48px]"
             />
           </div>
           {/* input for email */}
@@ -202,7 +202,7 @@ const Dashboard = () => {
           <div className="my-6">
             <button
               type="submit"
-              className="block w-full p-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-blue-500 focus:ring-4 focus:outline-none   dark:focus:ring-blue-800 font-medium text-sm md:text-base"
+              className="block w-full p-3 md:p-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-blue-500 focus:ring-4 focus:outline-none dark:focus:ring-blue-800 font-medium text-sm md:text-base min-h-[48px]"
             >
               Save
             </button>

@@ -14,11 +14,11 @@ const Login = () => {
     }
   }, [session, router]);
   return (
-    <div className="text-white py-14 container mx-auto">
-      <h1 className="text-center font-bold text-3xl">Login to Get Started</h1>
+    <div className="text-white py-14 container max-w-screen-xl mx-auto px-4">
+      <h1 className="text-center font-bold text-2xl md:text-3xl">Login to Get Started</h1>
 
-      <div className="flex flex-col gap-2 min-h-screen items-center  p-10">
-        <button className="flex items-center w-64 bg-slate-50 text-black border border-gray-300 rounded-lg shadow-md max-w-xs px-6 py-2 text-sm font-medium  hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+      <div className="flex flex-col gap-3 min-h-screen items-center p-6 md:p-10">
+        <button className="flex items-center w-full max-w-xs bg-slate-50 text-black border border-gray-300 rounded-lg shadow-md px-6 py-3 text-sm font-medium hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 min-h-[48px]">
           <svg
             className="h-6 w-6 mr-2"
             xmlns="http://www.w3.org/2000/svg"

@@ -29,8 +29,8 @@ const Navbar = () => {
       <div className="flex items-center justify-between">
         <div>
           <Link href="/" className="flex items-center space-x-2">
-            <Image src={Tea} alt="Tea Gif" width={44} className="invertImg" />
-            <span className="font-bold text-xl">Get Me a Chai</span>
+            <Image src={Tea} alt="Tea Gif" width={36} className="invertImg md:w-[44px]" />
+            <span className="font-bold text-lg md:text-xl">Get Me a Chai</span>
           </Link>
         </div>
         
@@ -68,7 +68,7 @@ const Navbar = () => {
                 id="dropdown"
                 className={`z-10 ${
                   showdropdown ? "" : "hidden"
-                } absolute top-16 right-20 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}
+                } absolute top-16 right-4 md:right-20 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}
               >
                 <ul
                   className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -106,7 +106,7 @@ const Navbar = () => {
 
           {session && (
             <button
-              className="text-white w-fit bg-linear-to-br from-purple-600 to-blue-500 hover:bg-linear-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              className="text-white w-fit bg-linear-to-br from-purple-600 to-blue-500 hover:bg-linear-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-3 text-center min-h-[44px]"
               onClick={() => {
                 signOut({ callbackUrl: "/" });
               }}
@@ -115,8 +115,8 @@ const Navbar = () => {
             </button>
           )}
           {!session && (
-            <Link href={"/login"}>
-              <button className="text-white bg-linear-to-br from-purple-600 to-blue-500 hover:bg-linear-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+            <Link href="/login">
+              <button className="text-white bg-linear-to-br from-purple-600 to-blue-500 hover:bg-linear-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-3 text-center min-h-[44px]">
                 Login
               </button>
             </Link>
@@ -127,9 +127,10 @@ const Navbar = () => {
         <div className="md:hidden flex items-center">
           <button 
             onClick={() => setShowMobileMenu(!showMobileMenu)}
-            className="text-white focus:outline-none"
+            className="text-white focus:outline-none p-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
+            aria-label={showMobileMenu ? "Close menu" : "Open menu"}
           >
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               {showMobileMenu ? (
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
               ) : (
@@ -142,22 +143,22 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {showMobileMenu && (
-        <div className="md:hidden flex flex-col items-center mt-4 gap-4 pb-4">
+        <div className="md:hidden flex flex-col items-center mt-4 gap-2 pb-4">
           {session && (
             <>
-               <Link href="/dashboard" onClick={() => setShowMobileMenu(false)} className="hover:text-blue-400">Dashboard</Link>
-               <Link href={`/${session.user.name}`} onClick={() => setShowMobileMenu(false)} className="hover:text-blue-400">Your Page</Link>
+               <Link href="/dashboard" onClick={() => setShowMobileMenu(false)} className="hover:text-blue-400 py-3 px-4 min-h-[44px] flex items-center">Dashboard</Link>
+               <Link href={`/${session.user.name}`} onClick={() => setShowMobileMenu(false)} className="hover:text-blue-400 py-3 px-4 min-h-[44px] flex items-center">Your Page</Link>
                <button 
                  onClick={() => { signOut(); setShowMobileMenu(false); }}
-                 className="hover:text-blue-400"
+                 className="hover:text-blue-400 py-3 px-4 min-h-[44px]"
                >
                  Sign out
                </button>
             </>
           )}
            {!session && (
-            <Link href={"/login"} onClick={() => setShowMobileMenu(false)}>
-              <button className="text-white bg-linear-to-br from-purple-600 to-blue-500 hover:bg-linear-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+            <Link href="/login" onClick={() => setShowMobileMenu(false)}>
+              <button className="text-white bg-linear-to-br from-purple-600 to-blue-500 hover:bg-linear-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-3 text-center min-h-[44px]">
                 Login
               </button>
             </Link>

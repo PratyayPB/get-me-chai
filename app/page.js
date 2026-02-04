@@ -7,8 +7,8 @@ import Link from "next/link";
 export default function Home() {
   return (
     <>
-      <div className="hero flex flex-col items-center justify-center gap-4 my-12">
-        <section className="flex items-center space-x-4 text-white px-4 py-2">
+      <div className="hero flex flex-col items-center justify-center gap-4 my-12 px-4">
+        <section className="flex items-center space-x-4 text-white py-2">
           <p className="font-extrabold text-3xl md:text-5xl text-center">Get Me a Chai</p>
           <span>
             <Image
@@ -25,26 +25,26 @@ export default function Home() {
           A place where your fans can buy you a chai. Unleash the power of your
           fans and get your projects funded.
         </p>
-        <div className="flex items-center justify-center gap-4 mt-4">
+        <div className="flex flex-wrap items-center justify-center gap-4 mt-4">
           <Link href="/login">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded min-h-[48px]">
               Get Started
             </button>{" "}
           </Link>
           <Link href="/about">
-            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded min-h-[48px]">
               Learn More
             </button>
           </Link>
         </div>
       </div>
 
-      <div className="line h-1  bg-white opacity-10 my-10"></div>
-      <div className="flex flex-col items-center justify-center my-12 px-4">
+      <div className="line h-1 bg-white opacity-10 my-10"></div>
+      <div className="flex flex-col items-center justify-center my-12 px-4 max-w-screen-xl mx-auto">
         <p className="text-2xl md:text-3xl font-bold text-center">
           Your <em className="text-gray-300">Fans</em> can buy you a CHAI
         </p>
-        <section className="grid grid-cols-1 md:grid-cols-3 justify-items-center gap-8 md:gap-12 lg:gap-20 my-10">
+        <section className="grid grid-cols-1 md:grid-cols-3 justify-items-center gap-8 md:gap-12 lg:gap-20 my-10 w-full">
           <div className="component flex flex-col justify-center items-center gap-2 text-center">
             <Image src={WorkIcon} alt="Work Icon" width={120} height={120} />
             <p className="font-semibold text-lg">Fans want to help</p>
@@ -71,9 +71,9 @@ export default function Home() {
         </section>
       </div>
 
-      <div className="line h-1  bg-white opacity-10 my-10"></div>
+      <div className="line h-1 bg-white opacity-10 my-10"></div>
 
-      <div className="flex flex-col my-12 justify-center items-center gap-8 px-4">
+      <div className="flex flex-col my-12 justify-center items-center gap-8 px-4 max-w-screen-xl mx-auto">
         <p className="font-extrabold text-2xl md:text-3xl text-center">Learn more about us</p>
         <div className="w-full md:w-[70%] lg:w-[50%] h-[30vh] md:h-[40vh]">
           <iframe
