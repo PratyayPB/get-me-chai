@@ -12,7 +12,7 @@
 
 ## 🚀 Features
 
-- **User Authentication**: Secure login using Google OAuth via NextAuth.js.
+- **User Authentication**: Secure login using Github OAuth via NextAuth.js.
 - **Creator Profiles**: Each user gets a unique profile page where fans can send money.
 - **Payment Integration**: Seamless payment processing using the **Razorpay** API.
 - **Leaderboard**: Displays the top supporters and recent donations for each creator.
@@ -43,9 +43,8 @@
 <img width="1919" height="955" alt="Screenshot 2026-02-04 023017" src="https://github.com/user-attachments/assets/6aefb8e1-0604-4aa0-acfe-13a8713a4ee9" /> <br>
 <img width="1905" height="873" alt="Screenshot 2026-02-04 023053" src="https://github.com/user-attachments/assets/7d12cdfb-43b5-48ae-b80e-ae3bf5e542f8" /> <br>
 
-
-
 ---
+
 ### Prerequisites
 
 - Node.js (v18.x or later)
@@ -53,5 +52,3 @@
 - A MongoDB database (Atlas)
 - Razorpay API Keys
 - Google Cloud Console (for OAuth)
-
-

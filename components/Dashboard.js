@@ -37,19 +37,21 @@ const Dashboard = () => {
   };
 
   const handleSubmit = async (data) => {
-    update();
     let a = await updateProfile(data, session.user.name);
-    toast("Profile Updated", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-    });
+    if (a) {
+      update();
+      toast("Profile Updated", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
   };
 
   //   const handleSubmit = async (e) => {

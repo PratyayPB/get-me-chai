@@ -6,8 +6,18 @@ import User from "@/models/User";
 
 export const initiate = async (amount, to_username, paymentForm) => {
   await connectDB();
-  //Fetch Key Secret from Database
-  let user = await User.findOne({ username: to_username });
+  // Fetch Razorpay credentials from database
+  let user = await User.findOne({ username: to_username }).lean();
+  console.log(user);
+
+  if (!user) {
+    throw new Error(`User not found: ${to_username}`);
+  }
+  if (!user.razorpayid || !user.razorpaysecret) {
+    throw new Error(
+      `Razorpay credentials are missing for user ${to_username}. Please add key_id and key_secret to the user's profile.`,
+    );
+  }
 
   var instance = new Razorpay({
     key_id: user.razorpayid,

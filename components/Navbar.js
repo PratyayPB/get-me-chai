@@ -1,7 +1,7 @@
 "use client";
 import React, { use } from "react";
 import { useState, useEffect, useRef } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 import Tea from "../public/tea.gif";
@@ -29,11 +29,16 @@ const Navbar = () => {
       <div className="flex items-center justify-between">
         <div>
           <Link href="/" className="flex items-center space-x-2">
-            <Image src={Tea} alt="Tea Gif" width={36} className="invertImg md:w-[44px]" />
+            <Image
+              src={Tea}
+              alt="Tea Gif"
+              width={36}
+              className="invertImg md:w-[44px]"
+            />
             <span className="font-bold text-lg md:text-xl">Get Me a Chai</span>
           </Link>
         </div>
-        
+
         {/* Desktop Menu */}
         <div className="hidden md:flex justify-center items-center gap-4">
           {session && (
@@ -125,16 +130,32 @@ const Navbar = () => {
 
         {/* Mobile Hamburger Button */}
         <div className="md:hidden flex items-center">
-          <button 
+          <button
             onClick={() => setShowMobileMenu(!showMobileMenu)}
             className="text-white focus:outline-none p-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
             aria-label={showMobileMenu ? "Close menu" : "Open menu"}
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               {showMobileMenu ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                />
               )}
             </svg>
           </button>
@@ -146,17 +167,32 @@ const Navbar = () => {
         <div className="md:hidden flex flex-col items-center mt-4 gap-2 pb-4">
           {session && (
             <>
-               <Link href="/dashboard" onClick={() => setShowMobileMenu(false)} className="hover:text-blue-400 py-3 px-4 min-h-[44px] flex items-center">Dashboard</Link>
-               <Link href={`/${session.user.name}`} onClick={() => setShowMobileMenu(false)} className="hover:text-blue-400 py-3 px-4 min-h-[44px] flex items-center">Your Page</Link>
-               <button 
-                 onClick={() => { signOut(); setShowMobileMenu(false); }}
-                 className="hover:text-blue-400 py-3 px-4 min-h-[44px]"
-               >
-                 Sign out
-               </button>
+              <Link
+                href="/dashboard"
+                onClick={() => setShowMobileMenu(false)}
+                className="hover:text-blue-400 py-3 px-4 min-h-[44px] flex items-center"
+              >
+                Dashboard
+              </Link>
+              <Link
+                href={`/${session.user.name}`}
+                onClick={() => setShowMobileMenu(false)}
+                className="hover:text-blue-400 py-3 px-4 min-h-[44px] flex items-center"
+              >
+                Your Page
+              </Link>
+              <button
+                onClick={() => {
+                  signOut();
+                  setShowMobileMenu(false);
+                }}
+                className="hover:text-blue-400 py-3 px-4 min-h-[44px]"
+              >
+                Sign out
+              </button>
             </>
           )}
-           {!session && (
+          {!session && (
             <Link href="/login" onClick={() => setShowMobileMenu(false)}>
               <button className="text-white bg-linear-to-br from-purple-600 to-blue-500 hover:bg-linear-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-3 text-center min-h-[44px]">
                 Login
