@@ -9,6 +9,16 @@
 ![Razorpay](https://img.shields.io/badge/Razorpay-02042B?style=for-the-badge&logo=razorpay&logoColor=3399FF)
 
 ---
+## Live Demo
+
+The application is deployed and accessible at the following URL:
+
+🔗 **Live Site:** https://get-me-chai-one.vercel.app/
+
+## Authentication Notice
+Currently, authentication is available **only via GitHub**.
+Other authentication providers are not enabled at the moment.  
+Additional login options may be added in future updates.
 
 ## 🚀 Features
 
