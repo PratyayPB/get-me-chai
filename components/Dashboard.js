@@ -4,11 +4,13 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { updateProfile, fetchUser } from "../actions/userActions";
 import { toast, Bounce } from "react-toastify";
+import Loader from "@/components/Loader";
 
 const Dashboard = () => {
   const { data: session, update } = useSession();
   const router = useRouter();
   const [form, setform] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -35,7 +37,10 @@ const Dashboard = () => {
   };
 
   const handleSubmit = async (data) => {
+    setLoading(true);
     let a = await updateProfile(data, session.user.name);
+    setLoading(false);
+    
     if (a?.error) {
       toast.error(a.error, {
         position: "top-right",
@@ -204,9 +209,11 @@ const Dashboard = () => {
           <div className="my-6">
             <button
               type="submit"
-              className="block w-full p-3 md:p-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-blue-500 focus:ring-4 focus:outline-none dark:focus:ring-blue-800 font-medium text-sm md:text-base min-h-[48px]"
+              disabled={loading}
+              className="block w-full p-3 md:p-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-blue-500 focus:ring-4 focus:outline-none dark:focus:ring-blue-800 font-medium text-sm md:text-base min-h-[48px] flex items-center justify-center gap-2 disabled:bg-blue-400 disabled:cursor-not-allowed"
             >
-              Save
+              {loading && <Loader className="w-5 h-5 text-white" />}
+              {loading ? "Saving..." : "Save"}
             </button>
           </div>
         </form>

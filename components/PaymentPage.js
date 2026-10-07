@@ -10,6 +10,7 @@ import { toast, Bounce } from "react-toastify";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Loader from "@/components/Loader";
 
 const PaymentPage = ({ username }) => {
   const router = useRouter();
@@ -18,8 +19,9 @@ const PaymentPage = ({ username }) => {
   const [currentUser, setcurrentUser] = useState({});
   const [payments, setPayments] = useState([]);
   const searchParams = useSearchParams();
-  const [coverImg, setcoverImg] = useState(currentUser?.cover?.Cover || Cover);
-  const [pfp, setpfp] = useState(currentUser?.pfp?.Pfp || Pfp);
+  const [coverImg, setcoverImg] = useState(Cover);
+  const [pfp, setpfp] = useState(Pfp);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (searchParams.get("paymentdone") === "true") {
@@ -54,6 +56,12 @@ const PaymentPage = ({ username }) => {
     const getData = async () => {
       const u = await fetchUser(username);
       setcurrentUser(u);
+      
+      // Update image states after fetching from database, fallback to defaults
+      if (u) {
+        setcoverImg(u.coverpic || Cover);
+        setpfp(u.profilepic || Pfp);
+      }
 
       const dbpayments = await fetchPayments(username);
       setPayments(dbpayments);
@@ -80,12 +88,14 @@ const PaymentPage = ({ username }) => {
     }
 
     try {
+      setLoading(true);
       let a = await initiate(amount, username, {
         ...paymentForm,
         name: paymentForm.name || session.user.name,
       });
 
       if (a.error) {
+        setLoading(false);
         toast.error(a.error, {
           position: "top-right",
           autoClose: 5000,
@@ -117,9 +127,16 @@ const PaymentPage = ({ username }) => {
       };
 
       const rzp1 = new window.Razorpay(options);
-
+      
+      // Stop loading when razorpay modal is closed or opened
+      rzp1.on("payment.failed", function (response) {
+        setLoading(false);
+      });
       rzp1.open();
+      // Keep loading true while modal is open, we could optionally set it to false after open
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       toast.error("Payment initiation failed. Please try again.", {
         position: "top-right",
         autoClose: 5000,
@@ -144,6 +161,8 @@ const PaymentPage = ({ username }) => {
           <Image
             src={coverImg}
             alt="Cover Image"
+            width={1200}
+            height={400}
             className="object-cover w-full h-[35vh] md:h-[40vh] lg:h-[50vh]"
             onError={() => setcoverImg(Cover)}
           />
@@ -152,6 +171,8 @@ const PaymentPage = ({ username }) => {
             <Image
               src={pfp}
               alt="Pfp"
+              width={120}
+              height={120}
               className="w-30 h-30 rounded-lg "
               onError={() => setpfp(Pfp)}
             />
@@ -219,36 +240,38 @@ const PaymentPage = ({ username }) => {
               />
               <button
                 onClick={() => pay(Number.parseInt(paymentForm.amount) * 100)}
-                className="text-white bg-linear-to-br from-purple-600 to-blue-500 hover:bg-linear-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm py-3 text-center disabled:opacity-50 disabled:bg-linear-to-br disabled:from-purple-100 disabled:to-blue-100 disabled:text-black disabled:cursor-not-allowed min-h-[48px]"
+                className="text-white bg-linear-to-br flex items-center justify-center gap-2 from-purple-600 to-blue-500 hover:bg-linear-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm py-3 text-center disabled:opacity-50 disabled:bg-linear-to-br disabled:from-purple-100 disabled:to-blue-100 disabled:text-black disabled:cursor-not-allowed min-h-[48px]"
                 disabled={
+                  loading ||
                   !paymentForm.name ||
                   !paymentForm.amount ||
                   !paymentForm.message
                 }
               >
-                Pay
+                {loading && <Loader className="w-5 h-5" />}
+                {loading ? "Processing..." : "Pay"}
               </button>
             </div>
 
             <div className="pay-options flex flex-wrap gap-4 mt-4">
               <button
                 onClick={() => pay(1000)}
-                disabled={!paymentForm.name || !paymentForm.message}
-                className="bg-[#1D293B] px-4 py-3 rounded-md disabled:opacity-50 min-h-[48px]"
+                disabled={loading || !paymentForm.name || !paymentForm.message}
+                className="bg-[#1D293B] flex items-center justify-center gap-2 px-4 py-3 rounded-md disabled:opacity-50 min-h-[48px]"
               >
                 Pay ₹10
               </button>
               <button
-                disabled={!paymentForm.name || !paymentForm.message}
+                disabled={loading || !paymentForm.name || !paymentForm.message}
                 onClick={() => pay(2000)}
-                className="bg-[#1D293B] px-4 py-3 rounded-md disabled:opacity-50 min-h-[48px]"
+                className="bg-[#1D293B] flex items-center justify-center gap-2 px-4 py-3 rounded-md disabled:opacity-50 min-h-[48px]"
               >
                 Pay ₹20
               </button>
               <button
-                disabled={!paymentForm.name || !paymentForm.message}
+                disabled={loading || !paymentForm.name || !paymentForm.message}
                 onClick={() => pay(3000)}
-                className="bg-[#1D293B] px-4 py-3 rounded-md disabled:opacity-50 min-h-[48px]"
+                className="bg-[#1D293B] flex items-center justify-center gap-2 px-4 py-3 rounded-md disabled:opacity-50 min-h-[48px]"
               >
                 Pay ₹30
               </button>

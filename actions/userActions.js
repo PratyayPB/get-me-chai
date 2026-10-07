@@ -9,7 +9,9 @@ import { authOptions } from "@/lib/authOptions";
 export const initiate = async (amount, to_username, paymentForm) => {
   const session = await getServerSession(authOptions);
   if (!session || !session.user || !session.user.email) {
-    return { error: "Authentication required: Please log in to make a payment." };
+    return {
+      error: "Authentication required: Please log in to make a payment.",
+    };
   }
 
   await connectDB();
@@ -17,7 +19,9 @@ export const initiate = async (amount, to_username, paymentForm) => {
   // Authorization check: OAuth email must match user email in database
   const payer = await User.findOne({ email: session.user.email });
   if (!payer || payer.email !== session.user.email) {
-    return { error: "Authorization failed: OAuth email does not match user email." };
+    return {
+      error: "Authorization failed: OAuth email does not match user email.",
+    };
   }
 
   // Fetch Razorpay credentials from database for recipient
@@ -27,7 +31,9 @@ export const initiate = async (amount, to_username, paymentForm) => {
     return { error: `User not found: ${to_username}` };
   }
   if (!user.razorpayid || !user.razorpaysecret) {
-    return { error: `Razorpay credentials are missing for user ${to_username}. Please add key_id and key_secret to the user's profile.` };
+    return {
+      error: `Razorpay credentials are missing for user ${to_username}. Please add key_id and key_secret to the user's profile.`,
+    };
   }
 
   var instance = new Razorpay({
@@ -51,7 +57,7 @@ export const initiate = async (amount, to_username, paymentForm) => {
       name: paymentForm.name || session.user.name,
       message: paymentForm.message,
     });
-    
+
     // Ensure the returned object is a plain JSON object to avoid Next.js serialization errors
     return JSON.parse(JSON.stringify(x));
   } catch (error) {
@@ -94,8 +100,14 @@ export const updateProfile = async (data, oldUsername) => {
 
   // Authorization check: OAuth email must match user email in database
   const currentUser = await User.findOne({ email: session.user.email });
-  if (!currentUser || currentUser.email !== session.user.email || currentUser.username !== oldUsername) {
-    return { error: "Authorization failed: OAuth email does not match user email." };
+  if (
+    !currentUser ||
+    currentUser.email !== session.user.email ||
+    currentUser.username !== oldUsername
+  ) {
+    return {
+      error: "Authorization failed: OAuth email does not match user email.",
+    };
   }
 
   let ndata = Object.fromEntries(data);
