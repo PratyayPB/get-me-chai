@@ -30,6 +30,14 @@ export const initiate = async (amount, to_username, paymentForm) => {
   if (!user) {
     return { error: `User not found: ${to_username}` };
   }
+
+  // Restrict user from paying to themselves
+  if (payer.email === user.email || payer.username === to_username) {
+    return {
+      error: "You cannot make a payment to yourself.",
+    };
+  }
+
   if (!user.razorpayid || !user.razorpaysecret) {
     return {
       error: `Razorpay credentials are missing for user ${to_username}. Please add key_id and key_secret to the user's profile.`,
