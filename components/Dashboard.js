@@ -13,19 +13,19 @@ const Dashboard = () => {
   const [form, setform] = useState({});
 
   useEffect(() => {
+    const getData = async () => {
+      console.log("Getting data for user:", session.user.name);
+      let u = await fetchUser(session.user.name);
+
+      setform(u);
+    };
+
     if (!session) {
       router.push("/login");
     } else {
       getData();
     }
   }, [router, session]);
-
-  const getData = async () => {
-    console.log("Getting data for user:", session.user.name);
-    let u = await fetchUser(session.user.name);
-
-    setform(u);
-  };
 
   //   const getData = async () => {
   //     let u = await fetchuser(session.user.name);

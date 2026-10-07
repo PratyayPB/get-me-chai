@@ -11,12 +11,10 @@ export const initiate = async (amount, to_username, paymentForm) => {
   console.log(user);
 
   if (!user) {
-    throw new Error(`User not found: ${to_username}`);
+    return { error: `User not found: ${to_username}` };
   }
   if (!user.razorpayid || !user.razorpaysecret) {
-    throw new Error(
-      `Razorpay credentials are missing for user ${to_username}. Please add key_id and key_secret to the user's profile.`,
-    );
+    return { error: `Razorpay credentials are missing for user ${to_username}. Please add key_id and key_secret to the user's profile.` };
   }
 
   var instance = new Razorpay({
@@ -29,17 +27,24 @@ export const initiate = async (amount, to_username, paymentForm) => {
     currency: "INR",
   };
 
-  let x = await instance.orders.create(options);
+  try {
+    let x = await instance.orders.create(options);
 
-  //create a payment object showing a pending payment in database
-  await Payment.create({
-    oid: x.id,
-    amount: amount,
-    to_user: to_username,
-    name: paymentForm.name,
-    message: paymentForm.message,
-  });
-  return x;
+    //create a payment object showing a pending payment in database
+    await Payment.create({
+      oid: x.id,
+      amount: amount,
+      to_user: to_username,
+      name: paymentForm.name,
+      message: paymentForm.message,
+    });
+    
+    // Ensure the returned object is a plain JSON object to avoid Next.js serialization errors
+    return JSON.parse(JSON.stringify(x));
+  } catch (error) {
+    console.error("Razorpay Error:", error);
+    return { error: error.message || "Failed to initiate payment with Razorpay" };
+  }
 };
 
 export const fetchUser = async (username) => {

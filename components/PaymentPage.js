@@ -65,27 +65,57 @@ const PaymentPage = ({ username }) => {
   }, [username]);
 
   const pay = async (amount) => {
-    let a = await initiate(amount, username, paymentForm);
+    try {
+      let a = await initiate(amount, username, paymentForm);
 
-    let orderid = a.id;
-    var options = {
-      key: currentUser.razorpayid, // Enter the Key ID generated from the Dashboard
-      amount: amount, // Amount is in currency subunits.
-      currency: "INR",
-      name: "BuyMeAChai", //your business name
-      description: "Test Transaction",
-      image: "https://example.com/your_logo",
-      order_id: orderid, // This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-      callback_url: `${process.env.NEXT_PUBLIC_URL}/api/razorpay`,
-      prefill: {
-        name: session?.user?.name || paymentForm.name || "Guest User",
-        email: session?.user?.email || "dummy@gmail.com",
-      },
-    };
+      if (a.error) {
+        toast.error(a.error, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        return;
+      }
 
-    const rzp1 = new window.Razorpay(options);
+      let orderid = a.id;
+      var options = {
+        key: currentUser.razorpayid, // Enter the Key ID generated from the Dashboard
+        amount: amount, // Amount is in currency subunits.
+        currency: "INR",
+        name: "BuyMeAChai", //your business name
+        description: "Test Transaction",
+        image: "https://example.com/your_logo",
+        order_id: orderid, // This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        callback_url: `${process.env.NEXT_PUBLIC_URL}/api/razorpay`,
+        prefill: {
+          name: session?.user?.name || paymentForm.name || "Guest User",
+          email: session?.user?.email || "dummy@gmail.com",
+        },
+      };
 
-    rzp1.open();
+      const rzp1 = new window.Razorpay(options);
+
+      rzp1.open();
+    } catch (error) {
+      toast.error("Payment initiation failed. Please try again.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      console.error(error);
+    }
   };
 
   return (
