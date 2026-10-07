@@ -24,12 +24,14 @@ const Username = async ({ params }) => {
   const { username } = await params;
 
   // If creator not found, show 404 page
-  let creator = await User.findOne({ username: username });
+  let creator = await User.findOne({ username: username }).lean();
   if (!creator) {
     notFound();
   }
 
-  return <PaymentPage username={username} />;
+  const plainCreator = JSON.parse(JSON.stringify(creator));
+
+  return <PaymentPage username={username} initialCurrentUser={plainCreator} />;
 };
 
 export default Username;

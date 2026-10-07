@@ -12,15 +12,17 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Loader from "@/components/Loader";
 
-const PaymentPage = ({ username }) => {
+const PaymentPage = ({ username, initialCurrentUser }) => {
   const router = useRouter();
   const { data: session } = useSession();
   const [paymentForm, setpaymentForm] = useState({});
-  const [currentUser, setcurrentUser] = useState({});
+  const [currentUser, setcurrentUser] = useState(initialCurrentUser || {});
   const [payments, setPayments] = useState([]);
   const searchParams = useSearchParams();
-  const [coverImg, setcoverImg] = useState(Cover);
-  const [pfp, setpfp] = useState(Pfp);
+  const [coverImg, setcoverImg] = useState(
+    initialCurrentUser?.coverpic || Cover
+  );
+  const [pfp, setpfp] = useState(initialCurrentUser?.profilepic || Pfp);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -46,21 +48,16 @@ const PaymentPage = ({ username }) => {
       [e.target.name]: e.target.value,
     });
   };
-  // const getData = async () => {
-  //   let u = await fetchUser(username);
-  //   setcurrentUser(u);
-  //   let dbpayments = await fetchPayments(username);
-  //   setPayments(dbpayments);
-  // };
+
   useEffect(() => {
     const getData = async () => {
-      const u = await fetchUser(username);
-      setcurrentUser(u);
-      
-      // Update image states after fetching from database, fallback to defaults
-      if (u) {
-        setcoverImg(u.coverpic || Cover);
-        setpfp(u.profilepic || Pfp);
+      if (!initialCurrentUser) {
+        const u = await fetchUser(username);
+        setcurrentUser(u);
+        if (u) {
+          setcoverImg(u.coverpic || Cover);
+          setpfp(u.profilepic || Pfp);
+        }
       }
 
       const dbpayments = await fetchPayments(username);
@@ -68,7 +65,7 @@ const PaymentPage = ({ username }) => {
     };
 
     if (username) getData();
-  }, [username]);
+  }, [username, initialCurrentUser]);
 
   const pay = async (amount) => {
     if (!session || !session.user || !session.user.email) {
