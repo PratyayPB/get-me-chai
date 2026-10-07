@@ -3,9 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { updateProfile, fetchUser } from "../actions/userActions";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Bounce } from "react-toastify";
+import { toast, Bounce } from "react-toastify";
 
 const Dashboard = () => {
   const { data: session, update } = useSession();
@@ -76,19 +74,6 @@ const Dashboard = () => {
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-
       <div className="container max-w-screen-xl mx-auto py-5 px-4 md:px-6">
         <h1 className="text-center my-5 text-2xl md:text-3xl font-bold">
           Welcome to your Dashboard

@@ -6,9 +6,7 @@ import Pfp from "../public/pfp.jpg";
 import { initiate } from "../actions/userActions";
 import { useSession } from "next-auth/react";
 import { fetchUser, fetchPayments } from "../actions/userActions";
-import { ToastContainer, toast } from "react-toastify";
-import { Bounce } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast, Bounce } from "react-toastify";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -139,18 +137,6 @@ const PaymentPage = ({ username }) => {
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
       <Script src="https://checkout.razorpay.com/v1/checkout.js"></Script>
 
       <div className="min-h-screen">
