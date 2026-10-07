@@ -65,8 +65,27 @@ const PaymentPage = ({ username }) => {
   }, [username]);
 
   const pay = async (amount) => {
+    if (!session || !session.user || !session.user.email) {
+      toast.error("Please login to make a payment", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      router.push("/login");
+      return;
+    }
+
     try {
-      let a = await initiate(amount, username, paymentForm);
+      let a = await initiate(amount, username, {
+        ...paymentForm,
+        name: paymentForm.name || session.user.name,
+      });
 
       if (a.error) {
         toast.error(a.error, {
@@ -94,8 +113,8 @@ const PaymentPage = ({ username }) => {
         order_id: orderid, // This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         callback_url: `${process.env.NEXT_PUBLIC_URL}/api/razorpay`,
         prefill: {
-          name: session?.user?.name || paymentForm.name || "Guest User",
-          email: session?.user?.email || "dummy@gmail.com",
+          name: session.user.name || paymentForm.name,
+          email: session.user.email,
         },
       };
 

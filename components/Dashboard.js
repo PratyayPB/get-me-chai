@@ -38,7 +38,22 @@ const Dashboard = () => {
 
   const handleSubmit = async (data) => {
     let a = await updateProfile(data, session.user.name);
-    if (a) {
+    if (a?.error) {
+      toast.error(a.error, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    }
+
+    if (a?.success || a) {
       update();
       toast("Profile Updated", {
         position: "top-right",

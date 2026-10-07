@@ -1,12 +1,10 @@
-import React from "react";
-import Dashboard from "@/components/Dashboard";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import { redirect } from "next/navigation";
 import connectDB from "@/db/connectDB";
 import User from "@/models/User";
 
-const DashboardPage = async () => {
+const UserPage = async () => {
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user || !session.user.email) {
@@ -21,7 +19,8 @@ const DashboardPage = async () => {
     redirect("/login");
   }
 
-  return <Dashboard />;
+  // Redirect authorized user to their dashboard
+  redirect("/dashboard");
 };
 
-export default DashboardPage;
+export default UserPage;

@@ -3,12 +3,25 @@ import Razorpay from "razorpay";
 import Payment from "@/models/Payment";
 import connectDB from "@/db/connectDB";
 import User from "@/models/User";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/authOptions";
 
 export const initiate = async (amount, to_username, paymentForm) => {
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user || !session.user.email) {
+    return { error: "Authentication required: Please log in to make a payment." };
+  }
+
   await connectDB();
-  // Fetch Razorpay credentials from database
+
+  // Authorization check: OAuth email must match user email in database
+  const payer = await User.findOne({ email: session.user.email });
+  if (!payer || payer.email !== session.user.email) {
+    return { error: "Authorization failed: OAuth email does not match user email." };
+  }
+
+  // Fetch Razorpay credentials from database for recipient
   let user = await User.findOne({ username: to_username }).lean();
-  console.log(user);
 
   if (!user) {
     return { error: `User not found: ${to_username}` };
@@ -18,8 +31,8 @@ export const initiate = async (amount, to_username, paymentForm) => {
   }
 
   var instance = new Razorpay({
-    key_id: user.razorpayid,
-    key_secret: user.razorpaysecret,
+    key_id: user.razorpayid.trim(),
+    key_secret: user.razorpaysecret.trim(),
   });
 
   let options = {
@@ -30,12 +43,12 @@ export const initiate = async (amount, to_username, paymentForm) => {
   try {
     let x = await instance.orders.create(options);
 
-    //create a payment object showing a pending payment in database
+    // Create a payment object showing a pending payment in database
     await Payment.create({
       oid: x.id,
       amount: amount,
       to_user: to_username,
-      name: paymentForm.name,
+      name: paymentForm.name || session.user.name,
       message: paymentForm.message,
     });
     
@@ -43,46 +56,69 @@ export const initiate = async (amount, to_username, paymentForm) => {
     return JSON.parse(JSON.stringify(x));
   } catch (error) {
     console.error("Razorpay Error:", error);
-    return { error: error.message || "Failed to initiate payment with Razorpay" };
+    let errorMessage = "Failed to initiate payment with Razorpay";
+    if (error.error && error.error.description) {
+      errorMessage = error.error.description;
+    } else if (error.message) {
+      errorMessage = error.message;
+    }
+    return { error: errorMessage };
   }
 };
 
 export const fetchUser = async (username) => {
   await connectDB();
   let u = await User.findOne({ username: username });
-
+  if (!u) return null;
   let user = u.toObject({ flattenObjectIds: true });
   return user;
 };
 
 export const fetchPayments = async (username) => {
   await connectDB();
-  //sort by decreasing order of amount and flatten objectIds
+  // Sort by decreasing order of amount and flatten objectIds
   let p = await Payment.find({ to_user: username, done: true })
     .sort({ amount: -1 })
     .limit(10)
     .lean({ flattenObjectIds: true });
-  console.log(p);
   return p;
 };
 
 export const updateProfile = async (data, oldUsername) => {
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user || !session.user.email) {
+    return { error: "Authentication required: Please log in." };
+  }
+
   await connectDB();
 
+  // Authorization check: OAuth email must match user email in database
+  const currentUser = await User.findOne({ email: session.user.email });
+  if (!currentUser || currentUser.email !== session.user.email || currentUser.username !== oldUsername) {
+    return { error: "Authorization failed: OAuth email does not match user email." };
+  }
+
   let ndata = Object.fromEntries(data);
-  //Check if new username is taken
+  // Ensure email matches session email
+  ndata.email = session.user.email;
+
+  // Check if new username is taken
   if (oldUsername !== ndata.username) {
     let u = await User.findOne({ username: ndata.username });
     if (u) {
-      return { error: "Username cannot be changed" };
+      return { error: "Username cannot be changed to an existing username" };
     }
   }
-  await User.updateOne({ email: ndata.email }, ndata);
-  //Update all payments to new username
+
+  await User.updateOne({ email: session.user.email }, ndata);
+
+  // Update all payments to new username
   if (oldUsername !== ndata.username) {
     await Payment.updateMany(
       { to_user: oldUsername },
       { to_user: ndata.username },
     );
   }
+
+  return { success: true };
 };
